@@ -14,3 +14,5 @@ module.exports = {
   rules: {},
   globals: {}
 }
+
+// 注释关闭eslint 要不是太难受

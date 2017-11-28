@@ -1,3 +1,8 @@
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const VConsolePlugin = require('vconsole-webpack-plugin')
+const isProd = process.env.NODE_ENV === 'production'
+const isDebug = process.env.DEBUG === 'debug'
+
 module.exports = {
   // html 头配置
   head: {
@@ -8,7 +13,8 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href49
+        : '/favicon.ico' }
     ]
   },
 
@@ -17,21 +23,27 @@ module.exports = {
 
   // 打包配置
   build: {
-    extend (config, ctx) {
-      if (ctx.dev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
-    },
+    // extend (config, ctx) {
+    //   if (ctx.dev && ctx.isClient) {
+    //     config.module.rules.push({
+    //       enforce: 'pre',
+    //       test: /\.(js|vue)$/,
+    //       loader: 'eslint-loader',
+    //       exclude: /(node_modules)/
+    //     })
+    //   }
+    // },
     filenames: {
       vendor: 'vendor.[hash].js',
       app: 'app.[chunkhash].js'
     },
-    vendor: ['axios']
+    vendor: ['axios'],
+    plugins: isProd ? [] : [
+      new FriendlyErrorsPlugin(),
+      new VConsolePlugin({
+        enable: isDebug
+      })
+    ]
   },
 
   // 使用lru-cache缓存

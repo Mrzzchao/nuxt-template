@@ -18,10 +18,21 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-
+import {aTypes} from '~/store/home'
 export default {
+  async asyncData ({store, route: {params}}) {
+    await store.dispatch(aTypes.getTeamInfo)
+  },
   components: {
     Logo
+  },
+  mounted () {
+    this.fetchData()
+  },
+  methods: {
+    fetchData () {
+      this.$store.dispatch(aTypes.getTeamInfo)
+    }
   }
 }
 </script>
